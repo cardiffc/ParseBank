@@ -33,21 +33,51 @@ public class Main {
             String description = element[5].trim();
             allTransactions.add(new Transaction(amount, contractor, date, direction, description));
         }
+        System.out.println("Total income = " + getTotalIncome(allTransactions) + "\n" + "Total expense = " + getTotalExpense(allTransactions));
+        System.out.println("Expense by contractor:");
         listExpanseByContractor(allTransactions);
+
     }
     private static void listExpanseByContractor(List<Transaction> transactions)
     {
         TreeMap<String, BigDecimal> expanseByContractor = new TreeMap();
-        transactions.forEach(transaction -> expanseByContractor.put(transaction.getContractor(), new BigDecimal("0")));
+        transactions.stream().filter(el -> el.getDirection().equals(Direction.EXPENSE))
+                .forEach(transaction -> expanseByContractor.put(transaction.getContractor(), BigDecimal.ZERO));
         for (Transaction trans : transactions)
         {
-            for (Map.Entry<String, BigDecimal> contr : expanseByContractor.entrySet()) {
-             contr.setValue(contr.getKey().equals(trans.getContractor()) ? contr.getValue().add(trans.getAmount()) : contr.getValue());
+            if (trans.getDirection().equals(Direction.EXPENSE)) {
+                for (Map.Entry<String, BigDecimal> contr : expanseByContractor.entrySet()) {
+                    contr.setValue(contr.getKey().equals(trans.getContractor()) ? contr.getValue().add(trans.getAmount())
+                                                                                : contr.getValue());
+                }
             }
         }
         for (Map.Entry<String,BigDecimal> entry : expanseByContractor.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
-
+    }
+    private static BigDecimal getTotalIncome(List<Transaction> transactions)
+    {
+        BigDecimal totalIncome = BigDecimal.ZERO;
+//        BigDecimal totalI = new BigDecimal.ZERO;
+//        transactions.stream().filter(transaction -> transaction.getDirection().equals(Direction.INCOME))
+//                .collect(to)
+//                .forEach(outTransaction -> totalIncome.add(outTransaction.getAmount()));
+        for (Transaction trans : transactions)
+        {
+            totalIncome = (trans.getDirection().equals(Direction.INCOME)) ? totalIncome.add(trans.getAmount())
+                                                                          : totalIncome;
+        }
+        return totalIncome;
+    }
+    private static BigDecimal getTotalExpense(List<Transaction> transactions)
+    {
+        BigDecimal totalExpense = BigDecimal.ZERO;
+        for (Transaction trans : transactions)
+        {
+            totalExpense = (trans.getDirection().equals(Direction.EXPENSE)) ? totalExpense.add(trans.getAmount())
+                                                                            : totalExpense;
+        }
+        return totalExpense;
     }
 }
