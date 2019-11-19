@@ -1,11 +1,12 @@
+import java.math.BigDecimal;
 import java.time.LocalDate;
 public class Transaction {
-    private long amount;
+    private BigDecimal amount;
     private String contractor;
     private LocalDate date;
     private Direction direction;
     private String description;
-    public Transaction (long amount, String contractor, LocalDate date, Direction direction, String description)
+    public Transaction (BigDecimal amount, String contractor, LocalDate date, Direction direction, String description)
     {
         this.amount = amount;
         this.contractor = contractor;
@@ -13,7 +14,7 @@ public class Transaction {
         this.direction = direction;
         this.description = description;
     }
-    public long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
     public LocalDate getDate() {
