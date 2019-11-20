@@ -6,7 +6,7 @@ public class Transaction {
     private LocalDate date;
     private Direction direction;
     private String description;
-    public Transaction (BigDecimal amount, String contractor, LocalDate date, Direction direction, String description)
+    protected Transaction(BigDecimal amount, String contractor, LocalDate date, Direction direction, String description)
     {
         this.amount = amount;
         this.contractor = contractor;
@@ -14,19 +14,19 @@ public class Transaction {
         this.direction = direction;
         this.description = description;
     }
-    public BigDecimal getAmount() {
+    protected BigDecimal getAmount() {
         return amount;
     }
-    public LocalDate getDate() {
+    protected LocalDate getDate() {
         return date;
     }
-    public Direction getDirection() {
+    protected Direction getDirection() {
         return direction;
     }
-    public String getContractor() {
+    protected String getContractor() {
         return contractor;
     }
-    public String getDescription() {
+    protected String getDescription() {
         return description;
     }
 
