@@ -1,3 +1,7 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -11,6 +15,8 @@ import java.util.regex.Pattern;
 
 public class Parser {
     private String file;
+    private static final Logger MARKLOGGER = LogManager.getLogger(Main.class);
+    private static final Marker NO_MATCHES_MARKER = MarkerManager.getMarker("NO_MATCHES");
     protected Parser(String file) {
         this.file = file;
     }
@@ -37,6 +43,10 @@ public class Parser {
                         : matcher.group("expense").replaceAll("\"","").replaceAll(",","."));
                 allTransactions.add(new Transaction(amount, contractor, date, direction));
             }
+        }
+        if (!matchFound)
+        {
+            MARKLOGGER.info(NO_MATCHES_MARKER,"Файл путой или не верный формат файла!");
         }
         return allTransactions;
     }

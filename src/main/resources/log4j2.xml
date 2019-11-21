@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <File name="NoMatchesFound" fileName="logs/error.log">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} %msg%n"/>
+            <Filters>
+                <MarkerFilter marker="NO_MATCHES" />
+            </Filters>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <root level="info">
+            <appender-ref ref="NoMatchesFound" />
+        </root>
+    </Loggers>
+</Configuration>
