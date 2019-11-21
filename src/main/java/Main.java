@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Parser movementParser = new Parser(movementsFile);
         List<Transaction> allTransactions = movementParser.parseMovements();
+
         System.out.println("Total income = " + getTotalIncome(allTransactions) + "\n" +
                 "Total expense = " + getTotalExpense(allTransactions));
         System.out.println("Expense by contractor:");
